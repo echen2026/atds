@@ -26,6 +26,9 @@ class Node():
     def set_next(self, new):
         self.next = new
 
+    def __repr__(self):
+        return "Node[data=" + self.data + ",next=" + self.next.__repr__() + "]"
+
 class Deque():
     def __init__(self):
         """Creates an empty deque"""
