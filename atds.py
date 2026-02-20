@@ -20,11 +20,11 @@ class Node():
     def get_next(self):
         return self.next
     
-    def set_data(self, new_data):
-        self.data = new_data
+    def set_data(self, new):
+        self.data = new
 
-    def set_next(self, new_next):
-        self.next = new_next
+    def set_next(self, new):
+        self.next = new
 
 class Deque():
     def __init__(self):
