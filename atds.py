@@ -3,7 +3,7 @@
 """
 atds.py
 Advanced Topics Data Structures
-A collection fo data types for the Advanced Topics class.
+A collection of data types for the Advanced Topics class.
 """
 
 __author__ = "Evan Chen"
