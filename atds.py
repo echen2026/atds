@@ -9,6 +9,69 @@ A collection of data types for the Advanced Topics class.
 __author__ = "Evan Chen"
 __version__ = "2026-02-12"
 
+class Vertex(object):
+    """Describes a vertex object in terms of a "key" and a
+    dictionary that indicates edges to neighboring vertices with
+    a specified weight.
+    """
+    def __init__(self, key):
+        """Constructs a vertex with a key value and an empty dictionary 
+        in which we'll store other vertices to which this vertex is connected.
+        """
+        self.key = key
+        self.neighbors = {}   # empty dictionary for neighboring vertices. key is
+                              # the Vertex, value is the weight
+        self.color = 'white'
+        self.distance = 0
+        self.previous = None
+
+    def set_neighbor(self, other, weight=0):
+        """Adds a reference to a neighboring Vertex object `other` to the dictionary, 
+        to which this vertex is connected by an edge. If a weight is not indicated, 
+        default weight is 0.
+        """
+        self.neighbors[other] = weight
+
+    def get_color(self):
+        return self.color
+    
+    def set_color(self, color):
+        self.color = color
+
+    def get_distance(self):
+        return self.distance
+    
+    def set_distance(self, new_distance):
+        self.distance = new_distance
+
+    def get_previous(self):
+        return self.previous
+    
+    def set_previous(self, new_prev):
+        self.previous = new_prev
+
+    def __repr__(self):
+        """Returns a representation of the vertex and its neighbors, suitable for 
+        printing. Check out the example of 'list comprehension' here!
+        """
+        return f"Vertex({self.key})"
+        
+    def __str__(self):
+        return ( f"{self.key} (color={self.color}), connected to: "
+        + f"{[x.key for x in self.neighbors]}")
+
+    def get_neighbors(self):
+        return self.neighbors.keys()    # returns Vertex objects
+
+    def get_key(self):
+        return self.key
+
+    def get_neighbor(self, other):
+        """Returns the weight of an edge connecting this vertex with another,
+        or None if the neighbor doesn't exist
+        """
+        return self.neighbors.get(other, None)
+    
 class Graph(object):
     """Describes the Graph class, which is primarily a dictionary
     mapping vertex names to Vertex objects, along with a few methods
@@ -68,47 +131,6 @@ class Graph(object):
             print(vertex)
         """
         return iter(self.vertices.values())
-
-class Vertex(object):
-    """Describes a vertex object in terms of a "key" and a
-    dictionary that indicates edges to neighboring vertices with
-    a specified weight.
-    """
-    def __init__(self, key):
-        """Constructs a vertex with a key value and an empty dictionary 
-        in which we'll store other vertices to which this vertex is connected.
-        """
-        self.key = key
-        self.neighbors = {}   # empty dictionary for neighboring vertices
-
-    def set_neighbor(self, other, weight=0):
-        """Adds a reference to a neighboring Vertex object to the dictionary, 
-        to which this vertex is connected by an edge. If a weight is not indicated, 
-        default weight is 0.
-        """
-        self.neighbors[other] = weight
-
-    def __repr__(self):
-        """Returns a representation of the vertex and its neighbors, suitable for 
-        printing. Check out the example of 'list comprehension' here!
-        """
-        return f"Vertex({self.key})"
-        
-    def __str__(self):
-        return ( f"{self.key} connected to: "
-        + f"{[x.key for x in self.neighbors]}")
-
-    def get_neighbors(self):
-        return self.neighbors.keys()
-
-    def get_key(self):
-        return self.key
-
-    def get_neighbor(self, other):
-        """Returns the weight of an edge connecting this vertex with another,
-        or None if the neighbor doesn't exist
-        """
-        return self.neighbors.get(other, None)
 
 class HashTable():
     def __init__(self, m):
