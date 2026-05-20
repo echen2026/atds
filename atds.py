@@ -9,6 +9,85 @@ A collection of data types for the Advanced Topics class.
 __author__ = "Evan Chen"
 __version__ = "2026-02-12"
 
+
+class BinaryHeap():
+    """The BinaryHeap class implements the Binary Heap Abstract 
+    Data Type as a list of values, where the index p of a parent
+    can be calculated from the index c of a child as c // 2.
+    """
+    def __init__(self):
+        self.heap_list = [0]  # not used. Here just to make parent-
+                             # child calculations work nicely.
+        # Note that current size of heap = len(self.heapList) - 1
+
+    def insert(self,value):
+        """Inserts a value into the heap by:
+        a. adding it to the end of the list, and then
+        b. "percolating" it up to an appropriate position
+        """
+        self.heap_list.append(value)
+        self.percolate_up(len(self.heap_list) - 1)
+
+    def percolate_up(self, i):
+        """Beginning at i, check to see if parent above is greater than
+        value at i. If so, percolate i upwards to parent's position.
+        """
+        while i // 2 > 0:
+            if self.heap_list[i] < self.heap_list[i // 2]:
+                self.heap_list[i], self.heap_list[i // 2] = self.heap_list[i // 2], self.heap_list[i]
+            i = i // 2
+        
+
+    def del_min(self):
+        """This is a bit trickier. It's easy to return the minimum item,
+        the first item on the list, but how do we readjust the heap then?
+        """
+        if len(self.heap_list) > 1:
+            min = self.heap_list[1]
+            self.heap_list[1] = self.heap_list[len(self.heap_list) - 1]
+            self.heap_list.pop()
+            self.percolate_down(1)
+            return min
+
+    def percolate_down(self,i):
+        """Moves the item at i down to a correct level in the heap. To
+        work correctly, needs to identify the minimum child for parent i.
+        """
+        while i*2 < len(self.heap_list):
+            min_child_index = i*2
+            if i*2+1 < len(self.heap_list) and self.heap_list[i*2+1] < self.heap_list[min_child_index]:
+                min_child_index = i*2+1
+            if self.heap_list[i] > self.heap_list[min_child_index]:
+                self.heap_list[i], self.heap_list[min_child_index] = self.heap_list[min_child_index], self.heap_list[i]
+            i = min_child_index
+
+        
+
+    def find_min(self):
+        """Returns the minimum item in the heap, without removing it.
+        """
+        return self.heap_list[1]
+
+    def is_empty(self):
+        return len(self.heap_list) - 1 == 0
+
+    def size(self):
+        return len(self.heap_list) - 1
+
+    def build_heap(self, list_of_keys):
+        """Returns a new heap based on a pre-existing list of key 
+        values."""
+        self.heap_list = [0]
+        for key in list_of_keys:
+            self.insert(key)
+       
+        
+
+        
+
+    def __repr__(self):
+        return "BinaryHeap" + str(self.heap_list)
+
 class Vertex(object):
     """Describes a vertex object in terms of a "key" and a
     dictionary that indicates edges to neighboring vertices with
